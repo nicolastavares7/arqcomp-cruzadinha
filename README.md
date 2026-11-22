@@ -8,8 +8,9 @@ Em um laboratório futurista, o jogador recupera um computador desativado enquan
 
 ## Link do Jogo Publicado
 
-> **Insira aqui o link após publicar no GitHub Pages:**  
-> `https://SEU-USUARIO.github.io/arqcomp-cruzadinha/`
+[Abrir CORE QUEST](https://nicolastavares7.github.io/arqcomp-cruzadinha/)
+
+[Repositório público](https://github.com/nicolastavares7/arqcomp-cruzadinha)
 
 ## Como Abrir e Jogar
 
@@ -26,7 +27,7 @@ Em um laboratório futurista, o jogador recupera um computador desativado enquan
    - Se ambas comportarem o tamanho, abre-se uma janela para o jogador escolher livremente entre Horizontal e Vertical (sem dedução automática baseada na resposta correta).
 5. **Remoção ou Troca de Resposta:** use o botão **Remover palavra** na barra da pista ativa para limpar uma escolha; letras compartilhadas com outras palavras preenchidas nos cruzamentos são preservadas.
 6. **Preciso de Ajuda:** se tiver dúvidas conceituais, clique em **Preciso de ajuda** ao lado da pista selecionada para receber uma orientação didática sem que as letras sejam preenchidas.
-7. **Respostas e Explicações:** acesse a aba ou botão **Respostas e explicações** a qualquer momento para consultar o gabarito comentado oficial sem alterar seu progresso no jogo.
+7. **Respostas e Explicações:** acesse a aba ou botão **Respostas e explicações** a qualquer momento para consultar o gabarito comentado do jogo sem alterar seu progresso no jogo.
 8. **Conferir:** clique em **Conferir** para validar acertos, erros e pendências, atualizando o contador e o status do sistema.
 9. **Reiniciar:** use a qualquer momento para zerar o tabuleiro e o progresso da cruzadinha.
 
@@ -75,4 +76,4 @@ Todas as pistas são formuladas estritamente a partir do livro de referência da
 3. **Botão "Preciso de ajuda":** exibe dica ou pergunta orientadora extraída do PDF sem revelar a resposta.
 4. **Laboratório de Componentes:** diagrama esquemático e fichas técnicas desbloqueadas progressivamente.
 5. **Treino para a Prova:** 10 questões com cálculos comentados ($2^n$, $P = 1/f$, $T = \text{CPI} \times P$) e 10 cartões de revisão (*flashcards*).
-6. **Rastreabilidade Pedagógica:** consulte o arquivo local [`REVISAO_PEDAGOGICA.md`](file:///Users/ntavares/Documents/Arq%20Comp/trabalho_arq/REVISAO_PEDAGOGICA.md).
+6. **Rastreabilidade Pedagógica:** consulte o arquivo local [`REVISAO_PEDAGOGICA.md`](REVISAO_PEDAGOGICA.md).
