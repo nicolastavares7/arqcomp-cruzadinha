@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORE QUEST — Reconstrua o sistema</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="lab-bg" aria-hidden="true"></div>
+
+  <!-- Barra de Navegação Superior (visível nas telas internas) -->
+  <header class="topbar" id="game-topbar" hidden>
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+            <rect x="8" y="8" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2" />
+            <rect x="13" y="13" width="10" height="10" rx="2" fill="currentColor" opacity="0.25" stroke="currentColor" stroke-width="1.5" />
+            <path d="M13 3v5M18 3v5M23 3v5M13 28v5M18 28v5M23 28v5M3 13h5M3 18h5M3 23h5M28 13h5M28 18h5M28 23h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div>
+          <span class="brand-title">CORE QUEST</span>
+          <span class="brand-sub">Reconstrua o sistema</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <button type="button" class="nav-btn" data-view="home" aria-pressed="false">
+          <span class="nav-dot" aria-hidden="true"></span>
+          Menu Inicial
+        </button>
+        <button type="button" class="nav-btn is-active" data-view="crossword" aria-pressed="true">
+          <span class="nav-dot" aria-hidden="true"></span>
+          Cruzadinha
+        </button>
+        <button type="button" class="nav-btn" data-view="glossary" aria-pressed="false">
+          <span class="nav-dot" aria-hidden="true"></span>
+          Respostas e Explicações
+        </button>
+        <button type="button" class="nav-btn" data-view="lab" aria-pressed="false">
+          <span class="nav-dot" aria-hidden="true"></span>
+          Laboratório
+          <span class="badge" id="lab-badge">0/14</span>
+        </button>
+        <button type="button" class="nav-btn" data-view="study" aria-pressed="false">
+          <span class="nav-dot" aria-hidden="true"></span>
+          Treino para a Prova
+        </button>
+      </nav>
+
+      <div class="status-cluster">
+        <div class="progress-pill" aria-live="polite">
+          <span id="score-counter">0 de 14 palavras corretas</span>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+        <button type="button" id="sound-toggle-topbar" class="icon-btn" aria-pressed="false" title="Ativar ou desativar áudio">
+          <span class="sound-icon" aria-hidden="true">🔇</span>
+          <span class="sound-label">Som: Off</span>
+        </button>
+        <button type="button" id="btn-open-settings-topbar" class="icon-btn" title="Configurações de som e volume">
+          ⚙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- VIEW 0: TELA INICIAL (MENU DE JOGO COMPLETO OCUPANDO A TELA) -->
+    <section id="view-home" class="view is-active" aria-label="Menu principal do jogo">
+      <div class="game-menu-screen">
+        <!-- Áudio Quick Pill na tela inicial -->
+        <div class="menu-audio-cluster">
+          <button type="button" id="sound-toggle-home" class="icon-btn" aria-pressed="false">
+            <span class="sound-icon" aria-hidden="true">🔇</span>
+            <span class="sound-label">Som: Off</span>
+          </button>
+        </div>
+
+        <!-- Ilustração Central com Chip com Pulsos e Brilho Discreto -->
+        <div class="menu-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 220" class="hero-chip-svg">
+            <defs>
+              <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#111c32" />
+                <stop offset="100%" stop-color="#0a1222" />
+              </linearGradient>
+            </defs>
+            <path class="hero-trace t1" d="M 30 40 L 90 40 L 90 85 L 110 85" />
+            <path class="hero-trace t2" d="M 30 110 L 110 110" />
+            <path class="hero-trace t3" d="M 30 180 L 90 180 L 90 135 L 110 135" />
+            <path class="hero-trace t4" d="M 290 40 L 230 40 L 230 85 L 210 85" />
+            <path class="hero-trace t5" d="M 290 110 L 210 110" />
+            <path class="hero-trace t6" d="M 290 180 L 230 180 L 230 135 L 210 135" />
+            
+            <circle class="hero-pulse p1" r="3" cx="30" cy="40" />
+            <circle class="hero-pulse p2" r="3" cx="290" cy="110" />
+            <circle class="hero-pulse p3" r="3" cx="30" cy="180" />
+
+            <rect x="110" y="60" width="100" height="100" rx="12" fill="url(#chipGrad)" stroke="#22d3ee" stroke-width="2" class="hero-core-rect" />
+            <rect x="102" y="75" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="102" y="95" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="102" y="115" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="102" y="135" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="210" y="75" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="210" y="95" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="210" y="115" width="8" height="6" rx="1" fill="#64748b" />
+            <rect x="210" y="135" width="8" height="6" rx="1" fill="#64748b" />
+
+            <circle cx="160" cy="110" r="28" fill="rgba(34,211,238,0.12)" stroke="#10b981" stroke-width="1.8" class="hero-die" />
+            <path d="M 150 110 L 170 110 M 160 100 L 160 120" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <div class="menu-header">
+          <span class="eyebrow">LABORATÓRIO DE ARQUITETURA</span>
+          <h1 class="menu-title">CORE QUEST</h1>
+          <p class="menu-sub">Reconstrua o sistema</p>
+          <p class="menu-desc">Recupere os componentes de um computador enquanto revisa Arquitetura Computacional.</p>
+        </div>
+
+        <!-- Botões do Menu Centralizados e Bem Separados -->
+        <div class="menu-nav-list" role="navigation" aria-label="Menu principal">
+          <button type="button" id="btn-menu-continue" class="menu-btn menu-btn-continue" hidden>
+            <span class="btn-glow"></span>
+            <span class="btn-icon" aria-hidden="true">⚡</span>
+            <span class="btn-txt">Continuar Partida</span>
+          </button>
+          <button type="button" id="btn-menu-play" class="menu-btn menu-btn-primary">
+            <span class="btn-glow"></span>
+            <span class="btn-icon" aria-hidden="true">▶</span>
+            <span class="btn-txt" id="btn-menu-play-text">Jogar</span>
+          </button>
+          <button type="button" id="btn-menu-study" class="menu-btn">
+            <span class="btn-icon" aria-hidden="true">📚</span>
+            <span class="btn-txt">Estudar</span>
+          </button>
+          <button type="button" id="btn-menu-howtoplay" class="menu-btn">
+            <span class="btn-icon" aria-hidden="true">💡</span>
+            <span class="btn-txt">Como Jogar</span>
+          </button>
+          <button type="button" id="btn-menu-settings" class="menu-btn">
+            <span class="btn-icon" aria-hidden="true">⚙️</span>
+            <span class="btn-txt">Configurações</span>
+          </button>
+        </div>
+
+        <div class="menu-footer-status" id="menu-footer-status">
+          <span class="mfs-icon">⚡</span>
+          <span id="menu-footer-text">Nenhuma letra preenchida ainda. Clique em <strong>Jogar</strong> para começar!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 1: CRUZADINHA -->
+    <section id="view-crossword" class="view" hidden aria-label="Cruzadinha de Arquitetura Computacional">
+      <header class="crossword-toolbar" aria-label="Opções da cruzadinha">
+        <div class="mode-selector" role="group" aria-label="Modo de jogo">
+          <span class="mode-label">Modo:</span>
+          <button type="button" class="mode-btn is-active" id="btn-mode-help" aria-pressed="true">
+            <span aria-hidden="true">💡</span> Com ajuda (cartões)
+          </button>
+          <button type="button" class="mode-btn" id="btn-mode-direct" aria-pressed="false">
+            <span aria-hidden="true">⌨️</span> Sem ajuda (digitação)
+          </button>
+        </div>
+
+        <div class="toolbar-right">
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-quick-glossary">
+            <span aria-hidden="true">📖</span> Respostas e explicações
+          </button>
+          <div class="csb-info">
+            <span class="csb-badge" id="csb-state-badge">OFFLINE</span>
+            <span class="csb-title"><strong id="csb-progress-title">0 de 14</strong> certas</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- BANCO DE PALAVRAS NO TOPO DO TABULEIRO -->
+      <section id="word-bank-section" class="word-bank-panel" aria-label="Banco de palavras">
+        <div class="word-bank-header">
+          <div>
+            <span class="eyebrow">BANCO DE PALAVRAS (14 OPÇÕES)</span>
+            <h3 class="word-bank-title" id="word-bank-instr">Arraste um cartão diretamente para qualquer casa da palavra no tabuleiro (ou clique no cartão para selecionar e depois toque na casa)</h3>
+          </div>
+          <span class="word-bank-hint" id="word-bank-hint">14 palavras disponíveis</span>
+        </div>
+        <div id="word-bank-cards" class="word-bank-grid" role="list"></div>
+      </section>
+
+      <!-- Mensagem de Vitória -->
+      <div id="victory-banner" class="victory-banner" hidden role="status" aria-live="polite">
+        <div class="victory-pulse" aria-hidden="true"></div>
+        <div>
+          <strong>SISTEMA 100% RECUPERADO!</strong>
+          <span>Todas as 14 palavras foram confirmadas. Os circuitos do computador estão operantes. Explore as fichas no Laboratório e o Treino para a Prova!</span>
+        </div>
+      </div>
+
+      <!-- Alerta de Conflito em Cruzamentos / Tamanho -->
+      <div id="crossword-alert" class="crossword-alert" hidden role="alert">
+        <div class="alert-content">
+          <span class="alert-icon">⚠️</span>
+          <span id="crossword-alert-text"></span>
+        </div>
+        <button type="button" id="btn-close-alert" class="close-btn" aria-label="Fechar alerta">✕</button>
+      </div>
+
+      <!-- Modal de Escolha de Direção em Cruzamentos -->
+      <div id="intersection-dialog" class="intersection-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="intersection-dialog-title">
+        <div class="intersection-box">
+          <h4 id="intersection-dialog-title">Cruzamento encontrado!</h4>
+          <p id="intersection-dialog-desc">Esta casa pertence a duas palavras. Escolha a direção que receberá o cartão:</p>
+          <div class="intersection-btns" id="intersection-btns"></div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-cancel-intersection">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- Grade Principal: Tabuleiro à esquerda, Pistas à direita -->
+      <div class="workspace-grid">
+        <div class="board-column">
+          <!-- Pista Ativa com Botão "Preciso de Ajuda" -->
+          <div class="active-clue-bar" id="active-clue-bar" aria-live="polite">
+            <div class="active-clue-main">
+              <div class="active-clue-meta">
+                <span class="clue-dir-badge" id="active-clue-badge">1H</span>
+                <span class="clue-len-badge" id="active-clue-len">16 letras</span>
+              </div>
+              <p class="active-clue-text" id="active-clue-text">Selecione uma casa ou pista para começar.</p>
+            </div>
+            <div class="active-clue-actions">
+              <button type="button" id="btn-clear-active-word" class="btn btn-secondary btn-sm" hidden title="Limpar letras desta palavra">
+                Remover palavra
+              </button>
+              <button type="button" id="btn-need-help" class="btn btn-help btn-sm" title="Receber orientação conceitual sem revelar letras">
+                <span aria-hidden="true">💡</span> Preciso de ajuda
+              </button>
+            </div>
+          </div>
+
+          <!-- Caixa Expansível de Ajuda Pedagógica -->
+          <div id="help-box" class="help-box" hidden aria-live="polite">
+            <div class="help-box-head">
+              <span class="help-tag">ORIENTAÇÃO CONCEITUAL</span>
+              <button type="button" id="btn-close-help" class="close-btn" aria-label="Fechar ajuda">✕</button>
+            </div>
+            <p id="help-box-content" class="help-box-text"></p>
+          </div>
+
+          <!-- Caixa de Explicação Pós-Acerto ou Pós-Erro -->
+          <div id="solved-explain-box" class="solved-explain-box" hidden aria-live="polite">
+            <div class="solved-head">
+              <span class="solved-tag" id="solved-tag-label">✓ CONCEITO CONFIRMADO</span>
+              <strong id="solved-word-title"></strong>
+            </div>
+            <p id="solved-word-desc" class="solved-desc"></p>
+          </div>
+
+          <!-- Tabuleiro da Cruzadinha -->
+          <div class="board-scroll">
+            <div id="crossword-grid" class="crossword-grid" role="grid" aria-label="Tabuleiro da cruzadinha"></div>
+          </div>
+
+          <!-- Barra de Controles da Cruzadinha -->
+          <div class="board-controls">
+            <div class="control-buttons">
+              <button type="button" id="btn-check" class="btn btn-primary">
+                <span aria-hidden="true">✓</span> Conferir
+              </button>
+              <button type="button" id="btn-reset" class="btn btn-secondary">
+                <span aria-hidden="true">↺</span> Reiniciar
+              </button>
+            </div>
+            <div id="check-feedback" class="check-feedback" aria-live="polite"></div>
+          </div>
+
+          <p class="keyboard-legend">
+            <strong>Controles:</strong> Arraste um cartão para as casas do tabuleiro • Clique no cartão e depois na casa • Digite diretamente • <kbd>Backspace</kbd> apaga •
+            <kbd>Setas</kbd> navegam • <kbd>Espaço</kbd> ou clique na casa alterna Horizontal/Vertical.
+          </p>
+        </div>
+
+        <aside class="clues-column" aria-label="Lista de pistas">
+          <div class="clue-group">
+            <h3 class="clue-group-title">Horizontais</h3>
+            <ul id="clues-horizontal" class="clue-list"></ul>
+          </div>
+          <div class="clue-group">
+            <h3 class="clue-group-title">Verticais</h3>
+            <ul id="clues-vertical" class="clue-list"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- VIEW: RESPOSTAS E EXPLICAÇÕES (CONSULTA COMPLETA) -->
+    <section id="view-glossary" class="view" hidden aria-label="Respostas e explicações completas">
+      <div class="section-intro">
+        <div>
+          <span class="eyebrow">GUIA DE ESTUDO COMPLETO</span>
+          <h2>Respostas e Explicações</h2>
+        </div>
+        <p>Consulte a correspondência de cada pergunta com sua respectiva resposta, fundamentada no livro didático com explicações simples e exemplos práticos. Abrir ou ler este guia não altera seu progresso na cruzadinha.</p>
+      </div>
+
+      <div class="glossary-actions">
+        <button type="button" class="btn btn-primary" id="btn-back-to-crossword">
+          ← Voltar para a Cruzadinha
+        </button>
+      </div>
+
+      <div id="glossary-grid" class="glossary-grid"></div>
+    </section>
+
+    <!-- VIEW 2: LABORATÓRIO DE COMPONENTES -->
+    <section id="view-lab" class="view" hidden aria-label="Laboratório de componentes">
+      <div class="section-intro">
+        <div>
+          <span class="eyebrow">RECUPERAÇÃO DE HARDWARE</span>
+          <h2>Laboratório de Componentes</h2>
+        </div>
+        <p>Acompanhe o diagrama conceitual dos circuitos e consulte os cartões técnicos desbloqueados conforme você confirma as palavras corretas na cruzadinha.</p>
+      </div>
+
+      <section class="schematic-panel" aria-label="Diagrama conceitual do computador">
+        <div class="schematic-header">
+          <div>
+            <span class="eyebrow">ESQUEMA CONCEITUAL DO COMPUTADOR</span>
+            <h3 class="schematic-title">Interligação por Barramentos Compartilhados</h3>
+          </div>
+          <p class="schematic-hint" id="lab-schematic-status">
+            Conexão entre CPU (ULA, UC, Registradores), Memórias e E/S via barramentos de Endereço, Dados e Controle.
+          </p>
+        </div>
+
+        <div class="schematic-svg-wrap">
+          <svg id="system-svg" viewBox="0 0 920 190" role="img" aria-label="Diagrama de blocos de Arquitetura Computacional">
+            <g class="bus-group">
+              <path id="trace-ADDRESSBUS" class="svg-trace" d="M 190 58 L 730 58" />
+              <path id="trace-DATABUS" class="svg-trace" d="M 190 132 L 730 132" />
+              <circle class="pulse-dot pulse-addr" r="4" cx="190" cy="58" />
+              <circle class="pulse-dot pulse-data" r="4" cx="190" cy="132" />
+            </g>
+
+            <g class="sub-traces">
+              <path class="svg-subtrace" data-node="CPU" d="M 110 58 L 190 58 M 110 132 L 190 132" />
+              <path class="svg-subtrace" data-node="CACHE" d="M 275 58 L 275 95 L 275 132" />
+              <path class="svg-subtrace" data-node="RAM" d="M 385 58 L 385 95 L 385 132" />
+              <path class="svg-subtrace" data-node="ROM" d="M 495 58 L 495 95 L 495 132" />
+              <path class="svg-subtrace" data-node="FLASH" d="M 605 58 L 605 95 L 605 132" />
+              <path class="svg-subtrace" data-node="DMA" d="M 715 58 L 715 95 L 715 132" />
+            </g>
+
+            <g id="node-CPU" class="comp-node" data-word="CPU">
+              <rect x="18" y="20" width="172" height="150" rx="10" class="node-box node-box-lg" />
+              <text x="104" y="40" class="node-title">CPU (Processador)</text>
+            </g>
+            <g id="node-UC" class="comp-node" data-word="UC">
+              <rect x="30" y="50" width="68" height="34" rx="6" class="node-box" />
+              <text x="64" y="71" class="node-label">UC</text>
+            </g>
+            <g id="node-ULA" class="comp-node" data-word="ULA">
+              <rect x="110" y="50" width="68" height="34" rx="6" class="node-box" />
+              <text x="144" y="71" class="node-label">ULA</text>
+            </g>
+            <g id="node-REGISTRADORES" class="comp-node" data-word="REGISTRADORES">
+              <rect x="30" y="96" width="148" height="30" rx="6" class="node-box" />
+              <text x="104" y="115" class="node-label">REGISTRADORES</text>
+            </g>
+
+            <g id="node-ADDRESSBUS" class="comp-node" data-word="ADDRESSBUS">
+              <rect x="215" y="42" width="120" height="24" rx="12" class="node-pill" />
+              <text x="275" y="58" class="node-pill-text">ADDRESS BUS</text>
+            </g>
+            <g id="node-DATABUS" class="comp-node" data-word="DATABUS">
+              <rect x="215" y="124" width="120" height="24" rx="12" class="node-pill" />
+              <text x="275" y="140" class="node-pill-text">DATA BUS</text>
+            </g>
+
+            <g id="node-CACHE" class="comp-node" data-word="CACHE">
+              <rect x="230" y="78" width="90" height="34" rx="6" class="node-box" />
+              <text x="275" y="99" class="node-label">CACHE</text>
+            </g>
+            <g id="node-RAM" class="comp-node" data-word="RAM">
+              <rect x="340" y="78" width="90" height="34" rx="6" class="node-box" />
+              <text x="385" y="99" class="node-label">RAM</text>
+            </g>
+            <g id="node-ROM" class="comp-node" data-word="ROM">
+              <rect x="450" y="78" width="90" height="34" rx="6" class="node-box" />
+              <text x="495" y="99" class="node-label">ROM</text>
+            </g>
+            <g id="node-FLASH" class="comp-node" data-word="FLASH">
+              <rect x="560" y="34" width="90" height="34" rx="6" class="node-box" />
+              <text x="605" y="55" class="node-label">FLASH</text>
+            </g>
+            <g id="node-EEPROM" class="comp-node" data-word="EEPROM">
+              <rect x="560" y="78" width="90" height="34" rx="6" class="node-box" />
+              <text x="605" y="99" class="node-label">EEPROM</text>
+            </g>
+            <g id="node-MEMORIADEMASSA" class="comp-node" data-word="MEMORIADEMASSA">
+              <rect x="546" y="122" width="118" height="34" rx="6" class="node-box" />
+              <text x="605" y="143" class="node-label">MEM. DE MASSA</text>
+            </g>
+
+            <g id="node-DMA" class="comp-node" data-word="DMA">
+              <rect x="680" y="78" width="76" height="34" rx="6" class="node-box" />
+              <text x="718" y="99" class="node-label">DMA</text>
+            </g>
+            <g id="node-MICROCONTROLADOR" class="comp-node" data-word="MICROCONTROLADOR">
+              <rect x="774" y="38" width="128" height="114" rx="10" class="node-box" />
+              <text x="838" y="76" class="node-label">CHIP ÚNICO</text>
+              <text x="838" y="94" class="node-label">MICRO-</text>
+              <text x="838" y="112" class="node-label">CONTROLADOR</text>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <div id="lab-grid" class="lab-grid"></div>
+    </section>
+
+    <!-- VIEW 3: TREINO PARA A PROVA -->
+    <section id="view-study" class="view" hidden aria-label="Treino para a prova">
+      <div class="section-intro">
+        <div>
+          <span class="eyebrow">REVISÃO BASEADA NO MATERIAL DIDÁTICO</span>
+          <h2>Treino para a Prova</h2>
+        </div>
+        <div class="study-subnav" role="tablist" aria-label="Modos de estudo">
+          <button type="button" class="subtab-btn is-active" data-study-tab="quiz" role="tab" aria-selected="true">Quiz Comentado</button>
+          <button type="button" class="subtab-btn" data-study-tab="flashcards" role="tab" aria-selected="false">Cartões de Revisão</button>
+        </div>
+      </div>
+
+      <div id="study-quiz" class="study-panel">
+        <div class="quiz-toolbar">
+          <span id="quiz-progress-text" class="quiz-meta">Questão 1 de 10</span>
+          <span id="quiz-score-text" class="quiz-meta">Acertos: 0/0</span>
+          <button type="button" id="btn-quiz-restart" class="btn btn-secondary btn-sm">Reiniciar Quiz</button>
+        </div>
+
+        <article id="quiz-card" class="quiz-card">
+          <div class="quiz-topic" id="quiz-topic">Tópico</div>
+          <h3 class="quiz-question" id="quiz-question">Carregando questão...</h3>
+          <div id="quiz-options" class="quiz-options" role="radiogroup" aria-labelledby="quiz-question"></div>
+          <div id="quiz-explanation" class="quiz-explanation" hidden></div>
+          <div class="quiz-footer">
+            <button type="button" id="btn-quiz-prev" class="btn btn-secondary">Anterior</button>
+            <button type="button" id="btn-quiz-next" class="btn btn-primary">Próxima questão</button>
+          </div>
+        </article>
+      </div>
+
+      <div id="study-flashcards" class="study-panel" hidden>
+        <p class="flashcards-hint">Clique em um cartão (ou pressione <kbd>Enter</kbd> / <kbd>Espaço</kbd>) para revelar a síntese dos tópicos da prova.</p>
+        <div id="flashcards-grid" class="flashcards-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: COMO JOGAR -->
+  <div id="modal-howtoplay" class="game-modal" hidden role="dialog" aria-modal="true" aria-labelledby="howtoplay-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="howtoplay-title">💡 Como Jogar e Estudar</h3>
+        <button type="button" class="close-btn" id="btn-close-howtoplay" aria-label="Fechar tutorial">✕</button>
+      </div>
+      <div class="modal-body tutorial-grid">
+        <div class="tut-step">
+          <span class="step-num">01</span>
+          <h4>Arraste para as Casas</h4>
+          <p>Arraste um cartão do banco diretamente sobre qualquer casa da palavra no tabuleiro. As casas e a pista correspondente se iluminam em tempo real.</p>
+        </div>
+        <div class="tut-step">
+          <span class="step-num">02</span>
+          <h4>Toque ou Digitação</h4>
+          <p>No celular, toque no cartão para selecioná-lo e depois toque na casa de destino. A digitação direta nas casas permanece sempre livre.</p>
+        </div>
+        <div class="tut-step">
+          <span class="step-num">03</span>
+          <h4>Botão Conferir</h4>
+          <p>Soltar um cartão apenas preenche as letras. Somente ao clicar em <strong>Conferir</strong> as palavras são avaliadas como certas ou erradas.</p>
+        </div>
+        <div class="tut-step">
+          <span class="step-num">04</span>
+          <h4>Respostas e Explicações</h4>
+          <p>Acesse o menu ou a barra de ferramentas para consultar o gabarito comentado a qualquer momento, sem alterar sua pontuação.</p>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-primary" id="btn-howtoplay-play">Entendido! Ir para o jogo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIGURAÇÕES DE ÁUDIO -->
+  <div id="modal-settings" class="game-modal" hidden role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="modal-card modal-sm">
+      <div class="modal-head">
+        <h3 id="settings-title">⚙️ Configurações de Áudio</h3>
+        <button type="button" class="close-btn" id="btn-close-settings" aria-label="Fechar configurações">✕</button>
+      </div>
+      <div class="modal-body settings-body">
+        <div class="setting-row">
+          <label for="toggle-audio-checkbox"><strong>Efeitos Sonoros</strong></label>
+          <input type="checkbox" id="toggle-audio-checkbox" class="setting-checkbox" />
+        </div>
+        <div class="setting-row volume-row">
+          <label for="volume-range"><strong>Volume Geral: <span id="volume-val-txt">60%</span></strong></label>
+          <input type="range" id="volume-range" min="0" max="100" value="60" class="setting-slider" />
+        </div>
+        <p class="settings-hint">Os efeitos sonoros são gerados localmente via Web Audio API. As preferências são salvas no seu navegador.</p>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-primary" id="btn-save-settings">Salvar e Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRMAÇÃO DE NOVA PARTIDA -->
+  <div id="modal-confirm-newgame" class="game-modal" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-new-title">
+    <div class="modal-card modal-sm">
+      <div class="modal-head">
+        <h3 id="confirm-new-title">⚠️ Iniciar Nova Partida?</h3>
+        <button type="button" class="close-btn" id="btn-close-confirm-new" aria-label="Cancelar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Você possui uma partida com progresso em andamento. Iniciar um novo jogo apagará as palavras preenchidas e o progresso da cruzadinha.</p>
+        <p>Deseja reiniciar do zero ou continuar a partida atual?</p>
+      </div>
+      <div class="modal-foot modal-foot-split">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-newgame">Continuar partida atual</button>
+        <button type="button" class="btn btn-primary" id="btn-proceed-newgame">Iniciar do zero</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
